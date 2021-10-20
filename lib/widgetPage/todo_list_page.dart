@@ -17,7 +17,7 @@ class _TodoListPage extends State<TodoListPage> {
     {'content': "quet nha", 'isDone': true},
     {'content': "di ngu", 'isDone': true},
   ];
-
+  bool isRow3Click = false;
   void _updateState(index) {
     var target = todo
         .firstWhere((element) => element['content'] == todo[index]['content']);
@@ -46,6 +46,7 @@ class _TodoListPage extends State<TodoListPage> {
                   child: ListTile(
                     onTap: () => {_updateState(index)},
                     leading: Checkbox(
+                      // value: todo[index]['isDone'],
                       value: todo[index]['isDone'],
                       onChanged: (e) => {},
                     ),
