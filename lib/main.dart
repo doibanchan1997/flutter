@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './widgetPage/home_page.dart';
 import './widgetPage/todo_list_page.dart';
+import './widgetPage/navigate_bottom.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: TodoListPage(title: 'Flutter Todo List'),
+      home: NavigationBottom(),
     );
   }
 }

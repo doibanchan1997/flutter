@@ -17,10 +17,14 @@ class _TodoListPage extends State<TodoListPage> {
     {'content': "quet nha", 'isDone': true},
     {'content': "di ngu", 'isDone': true},
   ];
-
+  final myController = TextEditingController();
   bool flagAddTodo = false;
 
   void _addTodoList() {
+    if (flagAddTodo == true && myController.text != "") {
+      todo.add({'content': myController.text, 'isDone': false});
+      myController.text = "";
+    }
     setState(() {
       flagAddTodo = !flagAddTodo;
     });
@@ -64,7 +68,52 @@ class _TodoListPage extends State<TodoListPage> {
   }
 
   Widget _createTodo() {
-    return Text('Create Todo');
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Flexible(
+            child: TextField(
+                controller: myController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Todo',
+                ))),
+      ],
+    );
+  }
+
+  Widget _showCreateTodo() {
+    return Positioned(
+        bottom: 0,
+        left: 0,
+        right: 0,
+        child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50), topRight: Radius.circular(50)),
+            color: Colors.white,
+          ),
+          height: 500,
+          padding: const EdgeInsets.all(5.0),
+          alignment: Alignment.center,
+          child: _createTodo(),
+        ));
+  }
+
+  Widget _showBackground() {
+    return GestureDetector(
+      onTap: () => {_addTodoList()},
+      child: Positioned(
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.black45,
+            ),
+          )),
+    );
   }
 
   @override
@@ -73,7 +122,7 @@ class _TodoListPage extends State<TodoListPage> {
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
-        titleTextStyle: TextStyle(
+        titleTextStyle: const TextStyle(
           color: Colors.white60,
         ),
       ),
@@ -84,39 +133,8 @@ class _TodoListPage extends State<TodoListPage> {
             Container(
               child: _listTodo(),
             ),
-            Visibility(
-                visible: flagAddTodo,
-                child: GestureDetector(
-                  onTap: () => {_addTodoList()},
-                  child: Positioned(
-                      top: 0,
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.black45,
-                        ),
-                      )),
-                )),
-            Visibility(
-                visible: flagAddTodo,
-                child: Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50)),
-                        color: Colors.white,
-                      ),
-                      height: 500,
-                      padding: const EdgeInsets.all(5.0),
-                      alignment: Alignment.bottomCenter,
-                      child: _createTodo(),
-                    )))
+            Visibility(visible: flagAddTodo, child: _showBackground()),
+            Visibility(visible: flagAddTodo, child: _showCreateTodo())
           ],
         ),
       ),
