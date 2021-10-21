@@ -25,13 +25,25 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _getContent() {
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(50), topRight: Radius.circular(50)),
-        color: Colors.white,
-      ),
-      height: MediaQuery.of(context).size.height - 300,
-    );
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50), topRight: Radius.circular(50)),
+          color: Colors.white,
+        ),
+        height: MediaQuery.of(context).size.height - 300,
+        child: Center(
+          child: ListView(
+            children: [
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text("Hao Nguyennnnnnnnnnnnnnnnnnnn"),
+                    Text("ssdsd")
+                  ])
+            ],
+          ),
+        ));
   }
 
   @override
