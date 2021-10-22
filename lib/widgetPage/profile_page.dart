@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../widget/profile_widget.dart';
 
@@ -9,11 +11,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  StreamController myController = StreamController.broadcast();
+
   Widget _getBackground() {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 300,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(
         image: NetworkImage(
           'https://www.teahub.io/photos/full/279-2797822_patrick-spongebob-wallpaper-patrick-star-with-cat.jpg',
@@ -22,6 +26,14 @@ class _ProfilePageState extends State<ProfilePage> {
       )),
     );
   }
+
+  Widget _buildDevider() => Container(
+        height: 26,
+        child: const VerticalDivider(
+          color: Colors.black,
+          thickness: 2,
+        ),
+      );
 
   Widget _getContent() {
     return Container(
@@ -34,13 +46,51 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Center(
           child: ListView(
             children: [
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text("Hao Nguyennnnnnnnnnnnnnnnnnnn"),
-                    Text("ssdsd")
-                  ])
+              Padding(
+                  padding: EdgeInsets.only(top: 75),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const Text(
+                          "Hao Nguyen",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+                        IntrinsicHeight(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: GestureDetector(
+                                    child: Icon(
+                                      Icons.facebook_rounded,
+                                      size: 40,
+                                    ),
+                                  )),
+                              _buildDevider(),
+                              const Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Icon(
+                                    Icons.linked_camera_outlined,
+                                    size: 40,
+                                  )),
+                              _buildDevider(),
+                              const Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Icon(
+                                  Icons.youtube_searched_for_outlined,
+                                  size: 40,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ]))
             ],
           ),
         ));
@@ -60,55 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             Positioned(left: 0, right: 0, bottom: 0, child: _getContent()),
-            Positioned(top: 150, left: 0, right: 0, child: AvatarWidget())
+            const Positioned(top: 150, left: 0, right: 0, child: AvatarWidget())
           ],
-        )
-
-        // Container(
-        //   child: Row(
-        //     mainAxisSize: MainAxisSize.max,
-        //     children: <Widget>[
-        //       Column(
-        //         children: [
-        //           Flexible(
-        //             child: Container(
-        //               width: MediaQuery.of(context).size.width,
-        //               height: MediaQuery.of(context).size.height,
-        //               decoration: BoxDecoration(
-        //                   image: DecorationImage(
-        //                 image: NetworkImage(
-        //                   'https://www.teahub.io/photos/full/279-2797822_patrick-spongebob-wallpaper-patrick-star-with-cat.jpg',
-        //                 ),
-        //                 fit: BoxFit.cover,
-        //               )),
-        //             ),
-        //             flex: 1,
-        //           ),
-        //           Positioned(
-        //               right: 0,
-        //               child: CircleAvatar(
-        //                 backgroundColor: Colors.black,
-        //                 radius: 50,
-        //                 child: ClipOval(
-        //                     child: Image.network(
-        //                   'https://www.greenpet.com.au/wp-content/uploads/2016/07/Cat-Food-Treats-300x300.jpg',
-        //                   width: 100,
-        //                   height: 100,
-        //                   fit: BoxFit.cover,
-        //                 )),
-        //               )),
-        //           Flexible(
-        //             child: Icon(
-        //               Icons.adb_sharp,
-        //               size: 50,
-        //             ),
-        //             flex: 3,
-        //           )
-        //         ],
-        //       )
-        //     ],
-        //   ),
-        // ),
-        );
+        ));
   }
 }

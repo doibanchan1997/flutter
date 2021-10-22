@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import './profile_page.dart';
 
@@ -8,7 +10,7 @@ class NavDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
+          const DrawerHeader(
             child: Text(
               'Hao Nguyen',
               style: TextStyle(color: Colors.white, fontSize: 25),
