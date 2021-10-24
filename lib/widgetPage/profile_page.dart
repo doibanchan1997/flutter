@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:my_app/bloc/theme/them_state.dart';
+import 'package:my_app/bloc/theme/theme_bloc.dart';
 
 import 'package:flutter/material.dart';
+import 'package:my_app/bloc/theme/theme_event.dart';
 import '../widget/profile_widget.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   StreamController myController = StreamController.broadcast();
 
+  final String bgColor = 'white';
   Widget _getBackground() {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -36,6 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
   Widget _getContent() {
+    final bloc = ThemeBloc();
     return Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -64,31 +69,65 @@ class _ProfilePageState extends State<ProfilePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              Padding(
-                                  padding: EdgeInsets.all(15),
-                                  child: GestureDetector(
-                                    child: Icon(
-                                      Icons.facebook_rounded,
-                                      size: 40,
-                                    ),
-                                  )),
+                              TextButton(
+                                onPressed: () => {
+                                  bloc.eventController
+                                      .add(ChangeThemeEvent("Facebook"))
+                                },
+                                child: Padding(
+                                    padding: EdgeInsets.all(15),
+                                    child: GestureDetector(
+                                      child: Icon(
+                                        Icons.facebook_rounded,
+                                        size: 40,
+                                      ),
+                                    )),
+                              ),
                               _buildDevider(),
-                              const Padding(
+                              TextButton(
+                                onPressed: () => {
+                                  bloc.eventController
+                                      .add(ChangeThemeEvent("Google"))
+                                },
+                                child: const Padding(
+                                    padding: EdgeInsets.all(15),
+                                    child: Icon(
+                                      Icons.linked_camera_outlined,
+                                      size: 40,
+                                    )),
+                              ),
+                              _buildDevider(),
+                              TextButton(
+                                onPressed: () => {
+                                  bloc.eventController
+                                      .add(ChangeThemeEvent("Youtube"))
+                                },
+                                child: const Padding(
                                   padding: EdgeInsets.all(15),
                                   child: Icon(
-                                    Icons.linked_camera_outlined,
+                                    Icons.youtube_searched_for_outlined,
                                     size: 40,
-                                  )),
-                              _buildDevider(),
-                              const Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Icon(
-                                  Icons.youtube_searched_for_outlined,
-                                  size: 40,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
+                        ),
+                        Row(
+                          children: [
+                            StreamBuilder<ThemeState>(
+                              // sử dụng StreamBuilder để lắng nghe Stream <=== new
+                              stream: bloc.stateController
+                                  .stream, // truyền stream của stateController vào để lắng nghe <=== new
+                              initialData: bloc
+                                  .state, // giá trị khởi tạo chính là volume 70 hiện tại <=== new
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<ThemeState> snapshot) {
+                                return Text(
+                                    'Âm lượng hiện tại: ${snapshot.data?.content}'); // update UI <=== new
+                              },
+                            )
+                          ],
                         )
                       ]))
             ],
